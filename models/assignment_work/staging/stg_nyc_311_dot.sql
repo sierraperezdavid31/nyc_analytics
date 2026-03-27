@@ -84,7 +84,7 @@ cleaned AS (
    WHERE (agency = 'DOT' OR agency_name LIKE '%Transportation%')
    AND unique_key IS NOT NULL
    AND created_date IS NOT NULL
-   AND CAST(created_date AS Date) >= CAST(DATE_SUB(CURRENT_DATE(), INTERVAL 7 YEAR) AS TIMESTAMP)
+   AND CAST(created_date AS TIMESTAMP) >= CAST(DATE_SUB(CURRENT_DATE(), INTERVAL 7 YEAR) AS TIMESTAMP)
    AND borough IS NOT NULL
 
    -- Deduplicate
