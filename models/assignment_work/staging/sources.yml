@@ -102,8 +102,10 @@ sources:
             description: borough, block, lot
           - name: bin
           - name: borough
+            description: the borough of the restaurant
           - name: building_number
           - name: business_address
+            description: the address of the building
           - name: census_tract
           - name: community_board
           - name: council_district
@@ -112,6 +114,7 @@ sources:
           - name: globalid
           - name: healthcompliance_terms
           - name: landmark_district_or_building
+            description: whether the building is a landmark
           - name: landmarkdistrict_terms
           - name: latitude
           - name: legal_business_name
