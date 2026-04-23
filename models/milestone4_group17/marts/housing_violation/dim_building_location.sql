@@ -8,9 +8,9 @@ SELECT
     street_name,
     zip, 
     borough,
-    MAX(low_house_number) as low_house_number,
-    MIN(high_house_number) as high_house_number,
-    MAX(street_code)
+    low_house_number,
+    high_house_number,
+    street_code
     --apartment,
     --story
 
@@ -21,9 +21,9 @@ GROUP BY
     street_name,
     zip, 
     borough,
-    --low_house_number,
-    --high_house_number,
-    --street_code
+    low_house_number,
+    high_house_number,
+    street_code
     --apartment,
     --story
 )
