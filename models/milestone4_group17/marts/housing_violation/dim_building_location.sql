@@ -7,7 +7,10 @@ SELECT
     high_house_number,
     street_name,
     zip, 
-    borough
+    borough,
+    street_code,
+    apartment,
+    story
 
 FROM {{ref('stg_nyc_open_housing_violations')}}
 GROUP BY 
@@ -17,5 +20,8 @@ GROUP BY
     high_house_number,
     street_name,
     zip, 
-    borough
+    borough,
+    street_code,
+    apartment,
+    story
 
