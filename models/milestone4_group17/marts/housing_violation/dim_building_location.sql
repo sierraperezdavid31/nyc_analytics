@@ -8,7 +8,7 @@ SELECT
     street_name,
     zip, 
     borough,
-    street_code,
+    street_code
     --apartment,
     --story
 
@@ -21,7 +21,7 @@ GROUP BY
     street_name,
     zip, 
     borough,
-    street_code,
+    street_code
     --apartment,
     --story
 ORDER BY building_id ASC
