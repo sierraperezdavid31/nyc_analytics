@@ -3,6 +3,7 @@
 name: 'nyc_analytics'
 version: '1.0.0'
 config-version: 2
+
 # Some default settings for dbt
 profile: 'default'
 
@@ -39,4 +40,22 @@ models:
          +materialized: table
 
        dot_311:
-         +materialized: table
+         +materialized: table         
+
+   milestone4_group17:
+     staging:
+       +materialized: table
+       +schema: nyc_group_staging
+
+     marts:
+       +materialized: table
+       +schema: nyc_group_marts
+
+       shared:
+        +materialized: table
+
+       311_hpd_service_request:
+        +materialized: table
+
+       housing_violation:
+        +materialized: table
