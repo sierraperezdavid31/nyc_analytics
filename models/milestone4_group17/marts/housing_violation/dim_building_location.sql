@@ -9,8 +9,8 @@ SELECT
     zip, 
     borough,
     street_code,
-    apartment,
-    story
+    --apartment,
+    --story
 
 FROM {{ref('stg_nyc_open_housing_violations')}}
 GROUP BY 
@@ -22,6 +22,6 @@ GROUP BY
     zip, 
     borough,
     street_code,
-    apartment,
-    story
-
+    --apartment,
+    --story
+ORDER BY building_id ASC
