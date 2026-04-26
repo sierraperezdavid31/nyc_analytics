@@ -18,7 +18,7 @@
 -- --   SELECT * FROM final
 
 -- Getting all the data from the staging nyc_open_housing_violation
-WITH open_housing_violation AS (
+WITH violation_table AS (
     SELECT * FROM {{ref('stg_nyc_open_housing_violations')}}
 ),
 
@@ -34,3 +34,34 @@ dim_location AS (
     FROM {{ref("dim_location_m4")}}
 ),
 
+-- Building Location dimension
+dim_building_location AS (
+    SELECT building_key, building_id, house_number, street_name, zip, borough, low_house_number, high_house_number,
+    street_code
+    FROM {{ref("dim_building_location")}}
+),
+
+-- Violation Status dimension
+dim_violation_status AS (
+    SELECT violation_status_key, current_status_id, current_status, violation_status
+    FROM {{ref("dim_violation_status")}}
+),
+
+-- Violation Type dimension
+dim_violation_type AS (
+    SELECT violation_type_key, order_number, violation_class, rent_impairing, nov_type, nov_description
+    FROM {{ref("dim_violation_type")}}
+),
+
+-- Creating final Fact TABLE
+
+final AS (
+    SELECT
+        -- Creating a surrogatew key for the FACT Table
+        {{dbt_utils.generate_surrogate_key(['v.violation_id'])}} AS violation_key,
+
+    FROM violation_table v
+
+    -- Left Join with date table
+    LEFT JOIN dim_date
+)
