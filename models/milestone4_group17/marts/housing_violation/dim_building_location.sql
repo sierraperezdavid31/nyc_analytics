@@ -11,7 +11,8 @@ SELECT
     low_house_number,
     high_house_number,
     street_code
-    --apartment,
+    -- These fields were commented out for future discussion
+    --apartment, 
     --story
 
 FROM {{ref('stg_nyc_open_housing_violations')}}
