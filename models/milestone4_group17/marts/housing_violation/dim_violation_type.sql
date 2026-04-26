@@ -32,7 +32,14 @@ violation_type_dimension AS (
             'nov_type',
             'nov_description'
             ])
-        }}
+        }} AS violation_type_key,
+        
+        violation_id,
+        order_number,
+        violation_class,
+        rent_impairing,
+        nov_type,
+        nov_description
 
     FROM violation_type_table
 )
