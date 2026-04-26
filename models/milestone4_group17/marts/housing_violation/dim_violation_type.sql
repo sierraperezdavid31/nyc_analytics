@@ -30,7 +30,6 @@ violation_type_dimension AS (
             ])
         }} AS violation_type_key,
         
-        violation_id,
         order_number,
         violation_class,
         rent_impairing,
