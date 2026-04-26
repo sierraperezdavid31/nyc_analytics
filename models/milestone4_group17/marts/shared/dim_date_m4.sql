@@ -8,6 +8,12 @@ WITH all_dates AS (
 
    UNION DISTINCT
 
+   SELECT DISTINCT CAST(closed_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_311_service_req') }}
+   WHERE closed_date IS NOT NULL
+
+   UNION DISTINCT
+
    -- Get dates from housing violations
    SELECT DISTINCT CAST(inspection_date AS DATE) AS full_date
    FROM {{ ref('stg_nyc_open_housing_violations') }}
