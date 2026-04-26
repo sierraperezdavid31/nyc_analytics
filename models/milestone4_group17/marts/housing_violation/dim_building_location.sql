@@ -26,6 +26,34 @@ GROUP BY
     street_code
     --apartment,
     --story
+),
+
+building_location_dimension AS (
+    SELECT
+    {{  dbt_utils.generate_surrogate_key(
+        [
+        'building_id',
+        'house_number',
+        'street_name',
+        'zip', 
+        'borough',
+        'low_house_number',
+        'high_house_number',
+        'street_code' 
+        ]
+    )
+
+    }} as building_key,
+    building_id,
+    house_number,
+    street_name,
+    zip, 
+    borough,
+    low_house_number,
+    high_house_number,
+    street_code
+
+    FROM building_location
 )
 
-SELECT * FROM building_location
+SELECT * FROM building_location_dimension
