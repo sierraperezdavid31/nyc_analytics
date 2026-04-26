@@ -15,9 +15,9 @@ WITH all_dates AS (
 
    UNION DISTINCT
 
-   SELECT DISTINCT CAST(approve_date AS DATE) AS full_date
+   SELECT DISTINCT CAST(approved_date AS DATE) AS full_date
    FROM {{ ref('stg_nyc_open_housing_violations') }}
-   WHERE approve_date IS NOT NULL
+   WHERE approved_date IS NOT NULL
 
    UNION DISTINCT
 
