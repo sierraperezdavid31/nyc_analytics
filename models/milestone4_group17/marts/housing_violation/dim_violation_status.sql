@@ -24,11 +24,12 @@ violation_status_dimension AS (
             'violation_status'  
             ])
         }} AS violation_status_key,
+
             current_status_id,
             current_status,
             violation_status
 
     FROM violation_status
-),
+)
 
 SELECT * FROM violation_status_dimension
