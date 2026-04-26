@@ -12,6 +12,55 @@ WITH all_dates AS (
    SELECT DISTINCT CAST(inspection_date AS DATE) AS full_date
    FROM {{ ref('stg_nyc_open_housing_violations') }}
    WHERE inspection_date IS NOT NULL
+
+   UNION DISTINCT
+
+   SELECT DISTINCT CAST(approve_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_open_housing_violations') }}
+   WHERE approve_date IS NOT NULL
+
+   UNION DISTINCT
+
+   SELECT DISTINCT CAST(original_certify_by_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_open_housing_violations') }}
+   WHERE original_certify_by_date IS NOT NULL
+
+   UNION DISTINCT
+
+   SELECT DISTINCT CAST(original_correct_by_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_open_housing_violations') }}
+   WHERE original_correct_by_date IS NOT NULL
+
+   UNION DISTINCT
+
+   SELECT DISTINCT CAST(new_certify_by_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_open_housing_violations') }}
+   WHERE new_certify_by_date IS NOT NULL
+
+   UNION DISTINCT
+
+   SELECT DISTINCT CAST(new_correct_by_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_open_housing_violations') }}
+   WHERE new_correct_by_date IS NOT NULL
+
+   UNION DISTINCT
+
+   SELECT DISTINCT CAST(certified_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_open_housing_violations') }}
+   WHERE certified_date IS NOT NULL
+
+   UNION DISTINCT
+
+   SELECT DISTINCT CAST(nov_issue_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_open_housing_violations') }}
+   WHERE nov_issue_date IS NOT NULL
+
+   UNION DISTINCT
+
+   SELECT DISTINCT CAST(current_status_date AS DATE) AS full_date
+   FROM {{ ref('stg_nyc_open_housing_violations') }}
+   WHERE current_status_date IS NOT NULL
+
 ),
 
 date_dimension AS (
