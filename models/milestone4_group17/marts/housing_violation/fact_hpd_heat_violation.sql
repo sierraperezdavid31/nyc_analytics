@@ -1,6 +1,6 @@
 -- Grain: one row per violation
 
--- --Pattern for fact table model:
+-- -- Pattern for fact table model:
 -- --   WITH
 -- --     [fact_source] AS (SELECT * FROM staging),
 -- --     [dim1] AS (SELECT surrogate_key, join_keys FROM dim1),
@@ -78,7 +78,10 @@ final AS (
         vs.violation_status_key,
         vt.violation_type_key,
 
-
+        -- Other fields
+        DATE_DIFF(v.approved_date, v.inspection_date, day) AS days_to_approve,
+        v.latitude,
+        v.longitude
 
         -- 
 
@@ -137,4 +140,5 @@ final AS (
 
 )
 
+-- Showing the final table
 SELECT * FROM final
