@@ -60,8 +60,81 @@ final AS (
         -- Creating a surrogatew key for the FACT Table
         {{dbt_utils.generate_surrogate_key(['v.violation_id'])}} AS violation_key,
 
+        -- Natural Key
+        v.violation_id,
+
+        -- Foriegn Keys
+        d_inspection.date_key AS inspection_date_key,
+        d_approve.date_key AS approved_date_key,
+        d_original_certify.date_key AS original_certify_by_date_key,
+        d_original_correct.date_key AS original_correct_by_date_key,
+        d_new_certify.date_key AS new_certify_by_date_key,
+        d_new_correct.date_key AS new_correct_by_date_key,
+        d_certified_date.date_key AS certified_date_key,
+        d_nov.date_key AS nov_issue_date_key,
+        d_current_status.date_key AS current_status_date_key,
+
+        loc.location_key,
+        vs.violation_status_key,
+        vt.violation_type_key,
+
+
+
+        -- 
+
     FROM violation_table v
 
     -- Left Join with date table
-    LEFT JOIN dim_date
+    LEFT JOIN dim_date d_inspection
+        ON CAST (v.inspection_date AS DATE) = d_inspection.full_date
+
+    LEFT JOIN dim_date d_approve
+        ON CAST (v.approved_date AS DATE) = d_approve.full_date
+
+    LEFT JOIN dim_date d_original_certify
+        ON CAST (v.original_certify_by_date AS DATE) = d_original_certify.full_date
+
+    LEFT JOIN dim_date d_original_correct
+        ON CAST (v.original_correct_by_date AS DATE) = d_original_correct.full_date
+    
+    LEFT JOIN dim_date d_new_certify
+        ON CAST (v.new_certify_by_date AS DATE) = d_new_certify.full_date
+
+    LEFT JOIN dim_date d_new_correct
+        ON CAST (v.new_correct_by_date AS DATE) = d_new_correct.full_date
+    
+    LEFT JOIN dim_date d_certified_date
+        ON CAST (v.certified_date AS DATE) = d_certified_date.full_date
+
+    LEFT JOIN dim_date d_nov
+        ON CAST (v.nov_issue_date AS DATE) = d_nov.full_date
+
+    LEFT JOIN dim_date d_current_status
+        ON CAST (v.current_status_date AS DATE) = d_current_status.full_date
+    
+    -- Joining Location dimension
+    LEFT JOIN dim_location loc
+        ON v.borough = loc.borough
+        AND COALESCE(v.zip, "") = COALESCE(loc.zipcode, "")
+        AND v.community_board = loc.community_board
+        AND v.council_district = loc.council_district
+    
+    -- Joining dim_violation_status
+    LEFT JOIN dim_violation_status vs 
+        ON v.current_status_id = vs.current_status_id
+        AND v.current_status = vs.current_status
+        AND v.violation_status = vs.current_status
+
+    -- Joining dim_violation_type
+    LEFT JOIN dim_violation_type vt 
+        ON v.order_number = vt.order_number
+        AND v.violation_class = vt.violation_class
+        AND v.rent_impairing = vt.rent_impairing
+        AND v.nov_type = vt.nov_type
+        AND v.nov_description = vt.nov_description
+
+
+
 )
+
+SELECT * FROM final
