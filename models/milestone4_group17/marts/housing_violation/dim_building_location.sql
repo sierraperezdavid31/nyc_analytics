@@ -2,7 +2,7 @@
 
 WITH building_location AS (
 SELECT
-    -- bin, this field seems to be empty
+    bin,
     building_id,
     house_number,
     street_name,
@@ -13,7 +13,9 @@ SELECT
     street_code
 
 FROM {{ref('stg_nyc_open_housing_violations')}}
+WHERE bin IS NOT NULL
 GROUP BY 
+    bin,
     building_id,
     house_number,
     street_name,
@@ -22,14 +24,13 @@ GROUP BY
     low_house_number,
     high_house_number,
     street_code
-    --apartment,
-    --story
 ),
 
 building_location_dimension AS (
     SELECT
     {{  dbt_utils.generate_surrogate_key(
         [
+        'bin',
         'building_id',
         'house_number',
         'street_name',
@@ -42,6 +43,7 @@ building_location_dimension AS (
     )
 
     }} as building_key,
+    bin,
     building_id,
     house_number,
     street_name,
