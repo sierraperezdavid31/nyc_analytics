@@ -36,7 +36,7 @@ dim_location AS (
 
 -- Building Location dimension
 dim_building_location AS (
-    SELECT building_key, building_id, house_number, street_name, zip, borough, low_house_number, high_house_number,
+    SELECT building_key, bin, building_id, house_number, street_name, zip, borough, low_house_number, high_house_number,
     street_code
     FROM {{ref("dim_building_location")}}
 ),
@@ -74,9 +74,11 @@ final AS (
         d_nov.date_key AS nov_issue_date_key,
         d_current_status.date_key AS current_status_date_key,
 
+        -- References to dimesion table that arent dates
         loc.location_key,
         vs.violation_status_key,
         vt.violation_type_key,
+        dbl.building_key,
 
         -- Other fields
         DATE_DIFF(v.approved_date, v.inspection_date, day) AS days_to_approve,
@@ -136,7 +138,17 @@ final AS (
         AND v.nov_type = vt.nov_type
         AND v.nov_description = vt.nov_description
 
-
+    -- Joining dim_building_location
+    LEFT JOIN dim_building_location dbl 
+        ON v.bin = dbl.bin
+        AND v.building_id = dbl.building_id
+        AND v.house_number = dbl.house_number
+        AND v.street_name = dbl.street_name
+        AND v.zip = dbl.zip
+        AND v.borough = dbl.borough
+        AND v.low_house_number = dbl.low_house_number
+        AND v.high_house_number = dbl.high_house_number
+        AND v.street_code = bdl.street_code
 
 )
 
