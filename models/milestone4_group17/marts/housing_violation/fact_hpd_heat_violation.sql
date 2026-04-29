@@ -131,7 +131,7 @@ final AS (
     LEFT JOIN dim_violation_status vs 
         ON v.current_status_id = vs.current_status_id
         AND v.current_status = vs.current_status
-        AND v.violation_status = vs.current_status
+        AND v.violation_status = vs.violation_status
 
     -- Joining dim_violation_type
     LEFT JOIN dim_violation_type vt 
