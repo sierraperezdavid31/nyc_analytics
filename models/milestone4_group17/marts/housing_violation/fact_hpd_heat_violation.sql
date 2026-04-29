@@ -120,7 +120,7 @@ final AS (
     -- Joining Location dimension
     LEFT JOIN dim_location loc
         ON v.borough = loc.borough
-        AND COALESCE(v.zip, "") = COALESCE(loc.zipcode, "")
+        AND v.zip = loc.zipcode
         AND v.community_board = loc.community_board
         AND v.council_district = loc.council_district
     
@@ -148,7 +148,7 @@ final AS (
         AND v.borough = dbl.borough
         AND v.low_house_number = dbl.low_house_number
         AND v.high_house_number = dbl.high_house_number
-        AND v.street_code = bdl.street_code
+        AND v.street_code = dbl.street_code
 
 )
 
