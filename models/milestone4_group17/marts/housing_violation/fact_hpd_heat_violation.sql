@@ -81,10 +81,13 @@ final AS (
         dbl.building_key,
 
         -- Other fields
-        DATE_DIFF(v.approved_date, v.inspection_date, day) AS days_to_approve,
+        DATE_DIFF(v.approved_date, v.inspection_date, day) AS days_between_inspection_to_approve,
+        DATE_DIFF(v.current_status_date, v.inspection_date, day) AS days_between_inspection_to_current,
+        DATE_DIFF(v.current_status_date, v.approved_date, day) AS days_between_approved_to_current,
         v.latitude,
-        v.longitude
+        v.longitude,
 
+        1 AS violation_count
         -- 
 
     FROM violation_table v
